@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.db import engine
 from app.api import models
-from app.api.monitoreos import router
+from app.api.mediciones import router
 
 models.Base.metadata.create_all(bind=engine)
 
