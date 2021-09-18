@@ -52,7 +52,8 @@ class Parametro (Base):
     __tablename__ = "parametros"
     id = Column(Integer, primary_key= True, index=True)
     nombre = Column(String, nullable=False)
+    descripcion = Column(String, nullable=False)
     min_valor = Column(Float)
     max_valor = Column(Float)
     unidad = Column(String)
-    mediciones = relationship("Parametro", back_populates="mediciones",uselist=False)
+    mediciones = relationship("Medicion", back_populates="parametro",uselist=False)
