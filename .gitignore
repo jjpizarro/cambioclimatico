@@ -130,3 +130,5 @@ dmypy.json
 
 #frontend ignore
 frontend/node_modules
+Pipfile
+Pipfile.lock
