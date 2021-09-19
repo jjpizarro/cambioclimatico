@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from .schemas import MedicionView, Medicion, MedicionQf
+from .schemas import MedicionView, Medicion, MedicionQf, Filtro
 from . import models, schemas
 
 
@@ -33,3 +33,11 @@ def get_estaciones(db:Session):
 
 def get_parametros(db:Session):
     return db.query(models.Parametro).all()
+
+def filtrar_busqueda(db:Session, filtro:Filtro):
+    listaMd = db.query(models.Medicion).filter(models.Medicion.estacion_id == filtro.estacion, models.Medicion.parametro_id == filtro.parametro
+    ,
+    models.Medicion.fecha > filtro.startdate, models.Medicion.fecha < filtro.enddate
+    ).all()
+    mediciones = [conveter_medicion(medicion) for medicion in  listaMd]
+    return mediciones
