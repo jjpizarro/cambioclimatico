@@ -27,3 +27,9 @@ def update_qf_medicion(db:Session, medicion: MedicionQf):
     db.commit()
     db.refresh(md)
     return conveter_medicion(md)
+
+def get_estaciones(db:Session):
+    return db.query(models.Estacion).all()
+
+def get_parametros(db:Session):
+    return db.query(models.Parametro).all()
