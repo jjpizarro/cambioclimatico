@@ -1,5 +1,5 @@
 from typing import List, Optional
-
+from .models import QualityFlag
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -17,7 +17,7 @@ class Medicion(MedicionBase):
 
 class MedicionQf(BaseModel):
     id:int
-    qf:str
+    qf: QualityFlag
 
 
 class MedicionView(BaseModel):
@@ -46,3 +46,4 @@ class Filtro(BaseModel):
     parametro:int
     startdate: datetime
     enddate: datetime
+    
