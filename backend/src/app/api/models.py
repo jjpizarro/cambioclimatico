@@ -18,11 +18,11 @@ class EstadoEstacion(str, enum.Enum):
     inactiva = "Inactiva"
 
 class QualityFlag(str, enum.Enum):
-    bueno = "Bueno"
-    no_verificado = "No Verificado"
-    sospechoso = "Sospechoso"
-    malo = "Malo"
-    dato_faltante = "Dato Faltante"
+    bueno = "bueno"
+    no_verificado = "no_verificado"
+    sospechoso = "sospechoso"
+    malo = "malo"
+    dato_faltante = "dato_faltante"
 
 
 
