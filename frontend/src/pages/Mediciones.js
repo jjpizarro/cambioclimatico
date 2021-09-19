@@ -1,12 +1,45 @@
 import React, {useState, useEffect} from "react";
 import MedicionServicio from '../services/mediciones.services';
+
 const Mediciones = (props) =>{
     const [mediciones, setMediciones] = useState([]);
+    const [estaciones, setEstaciones] = useState([]);
+    const [parametros,setParametros] = useState([]);
+    const initialFiltros = {
+        estacion : '',
+        startdate: null,
+        enddate: null, 
+        parametro:''
+
+    }
+    const [filtros, setFiltros] = useState(initialFiltros);
+    const handleOnChange = (event) => {
+        const { name, value } = event.target;
+        setFiltros({
+          ...filtros,
+          [name]: value
+        });
+        
+      };
+      
     useEffect(() => {
         MedicionServicio.getMediciones().then(response=>{
             setMediciones(response.data);
-        })
+        });
+        MedicionServicio.getEstaciones().then(response=>{
+            setEstaciones(response.data);
+        });
+        MedicionServicio.getParametros().then(response =>{
+            setParametros(response.data);
+        });
+
     }, []);
+    const executeSubmit = (ev)=>{
+        ev.preventDefault();
+        MedicionServicio.filtrarBusqueda(filtros).then(response=>{
+
+        });
+    }
     return (
         <>
         <main>
@@ -19,31 +52,36 @@ const Mediciones = (props) =>{
               <div className="card">
                 <div className="card-body">
                   
-                  <form className="row row-cols-lg-auto g-3 align-items-center">
+                  <form onSubmit={executeSubmit} className="row row-cols-lg-auto g-3 align-items-center">
                     <div className="col-sm-3">
                       <label className="visually-hidden" for="param">Estación</label>
-                      <select className="form-select" id="station">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                      <select className="form-select" id="estacion" name="estacion" value={filtros.estacion}  onChange={handleOnChange} >
+                      <option selected>Seleccione...</option>
+                      {(
+                            estaciones.map(estacion =>(
+                                <option value={estacion.id}>{estacion.nombre}</option>
+                            ))
+                        )}
                       </select>
                     </div>
                     <div className="col-sm-3">
-                      <label className="visually-hidden" for="sdate">Fecha inicial</label>
-                      <input type="date" className="form-control" id="sdate" placeholder=""/>
+                      <label className="visually-hidden" for="startdate">Fecha inicial</label>
+                      <input type="date" className="form-control" id="startdate" name="startdate" value={filtros.startdate}  onChange={handleOnChange}/>
                     </div>
                     <div className="col-sm-3">
                       <label className="visually-hidden" for="enddate">Fecha final</label>
-                      <input type="date" className="form-control" id="enddate" placeholder=""/>
+                      <input type="date" className="form-control" id="enddate" value={filtros.enddate}  onChange={handleOnChange}/>
                     </div>
                     <div className="col-sm-3">
-                      <label className="visually-hidden" for="param">Parámetro</label>
-                      <select className="form-select" id="param">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                      <label className="visually-hidden" for="parametro">Parámetro</label>
+                      <select className="form-select" id="parametro" value="parametro" value={filtros.parametro}  onChange={handleOnChange}>
+                        <option selected>Seleccione...</option>
+                        {(
+                            parametros.map(parametro =>(
+                                <option value={parametro.id}>{parametro.nombre}</option>
+                            ))
+                        )}
+                        
                       </select>
                     </div>
                     <div className="col-sm-2">
