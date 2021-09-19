@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import MedicionServicio from '../services/mediciones.services';
+import ModalForm from '../components/ModalForm';
 
 const Mediciones = (props) =>{
     const [mediciones, setMediciones] = useState([]);
@@ -37,8 +38,14 @@ const Mediciones = (props) =>{
     const executeSubmit = (ev)=>{
         ev.preventDefault();
         MedicionServicio.filtrarBusqueda(filtros).then(response=>{
-
+          setMediciones(response.data);
         });
+    }
+
+    const updateMediciones = (item) => {
+      const itemIndex = mediciones.findIndex(data => data.id === item.id)
+      const newArray = [...mediciones.slice(0, itemIndex), item, ...mediciones.slice(itemIndex + 1)]
+      setMediciones(newArray)
     }
     return (
         <>
@@ -66,15 +73,15 @@ const Mediciones = (props) =>{
                     </div>
                     <div className="col-sm-3">
                       <label className="visually-hidden" for="startdate">Fecha inicial</label>
-                      <input type="date" className="form-control" id="startdate" name="startdate" value={filtros.startdate}  onChange={handleOnChange}/>
+                      <input type="datetime-local" className="form-control" id="startdate" name="startdate" value={filtros.startdate}  onChange={handleOnChange}/>
                     </div>
                     <div className="col-sm-3">
                       <label className="visually-hidden" for="enddate">Fecha final</label>
-                      <input type="date" className="form-control" id="enddate" value={filtros.enddate}  onChange={handleOnChange}/>
+                      <input type="datetime-local" className="form-control" id="enddate" name="enddate" value={filtros.enddate}  onChange={handleOnChange}/>
                     </div>
                     <div className="col-sm-3">
                       <label className="visually-hidden" for="parametro">Parámetro</label>
-                      <select className="form-select" id="parametro" value="parametro" value={filtros.parametro}  onChange={handleOnChange}>
+                      <select className="form-select" id="parametro" name ="parametro" value="parametro" value={filtros.parametro}  onChange={handleOnChange}>
                         <option selected>Seleccione...</option>
                         {(
                             parametros.map(parametro =>(
@@ -110,17 +117,19 @@ const Mediciones = (props) =>{
                         <td>{medicion.valor}</td>
                         <td>{medicion.unidad}</td>
                         <td>{medicion.qf}</td>
-                        <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <td>
+                           <ModalForm medicion={medicion} onUpdate = {updateMediciones} />
+                          {/*<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                           <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                           <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                        </svg>
+                          </svg>*/}
                         
                         </td>
                       </tr>   
                     ))
 
                 ):(<tr>
-            <td colSpan={7}>No se han agrado propiestarios</td>
+            <td colSpan={7}>No se encontraron registros</td>
           </tr>)}
                   
                 </tbody>
