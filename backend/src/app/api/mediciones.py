@@ -32,4 +32,9 @@ def get_estaciones(db: Session = Depends(get_db)):
 def get_parametros(db: Session = Depends(get_db)):
     parametros = services.get_parametros(db)
     return parametros
+
+@router.post('/filtros/',response_model=List[schemas.MedicionView])
+def filtrar_busqueda(filtro: schemas.Filtro, db: Session = Depends(get_db)):
+    mediciones = services.filtrar_busqueda(filtro= filtro, db=db)
+    return mediciones
  
