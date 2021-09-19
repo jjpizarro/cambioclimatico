@@ -29,5 +29,20 @@ class MedicionView(BaseModel):
     unidad: str
     qf: str
 
+class Estacion(BaseModel):
+    id:int
+    nombre: str
+    class Config:
+        orm_mode = True
+        
+class Parametro(BaseModel):
+    id:int
+    nombre:str
+    class Config:
+        orm_mode = True
 
-    
+class Filtro(BaseModel):
+    estacion: int
+    parametro:int
+    startdate: datetime
+    enddate: datetime
