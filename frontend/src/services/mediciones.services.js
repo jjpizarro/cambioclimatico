@@ -1,4 +1,4 @@
-import http from './http-common'
+import http from './http-common';
 
 const getMediciones = () =>{
     return http.get('/mediciones')
@@ -9,8 +9,20 @@ const getMedicion = id => {
 const updateMedicion = (data) =>{
     return http.put('/mediciones',data);
 }
+const getEstaciones = () =>{
+    return http.get('/estaciones');
+}
+const getParametros = () =>{
+    return http.get('/parametros');
+}
+const filtrarBusqueda = (data) =>{
+    return http.get('/filtros/',data);
+}
 export default {
     getMediciones,
     getMedicion,
-    updateMedicion
+    updateMedicion,
+    getEstaciones,
+    getParametros,
+    filtrarBusqueda
 }
