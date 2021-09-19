@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.db import engine
 from app.api import models
-from app.api.mediciones import router
+from app.api.mediciones import router as medicionesRouters
+#from app.api.estaciones import router as estacionesRouters
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -10,6 +11,7 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:8080",
+    "http://localhost:3000",
     "*",
 ]
 
@@ -23,7 +25,8 @@ app.add_middleware(
 
 app.router.prefix = "/api/v1"
 
-app.include_router(router)
+app.include_router(medicionesRouters)
+#app.include_router(estacionesRouters)
 
 '''
 @app.on_event("startup")
