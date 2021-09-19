@@ -23,3 +23,13 @@ def get_mediciones(id: int,  db: Session = Depends(get_db)):
 def update_medicion(medicion:schemas.MedicionQf, db:Session = Depends(get_db)):
     return services.update_qf_medicion(db,medicion)
 
+@router.get("/estaciones/", response_model=List[schemas.Estacion])
+def get_estaciones(db: Session = Depends(get_db)):
+    estaciones = services.get_estaciones(db)
+    return estaciones
+
+@router.get('/parametros/',response_model=List[schemas.Parametro])
+def get_parametros(db: Session = Depends(get_db)):
+    parametros = services.get_parametros(db)
+    return parametros
+ 
