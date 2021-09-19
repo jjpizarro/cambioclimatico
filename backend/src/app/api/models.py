@@ -6,7 +6,7 @@ from sqlalchemy import (
     Integer,
     Float , Enum,
     String,
-    
+    Boolean,
     ForeignKey,
 )
 from sqlalchemy.sql import func
@@ -57,3 +57,11 @@ class Parametro (Base):
     max_valor = Column(Float)
     unidad = Column(String)
     mediciones = relationship("Medicion", back_populates="parametro",uselist=False)
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(256), nullable=True)
+    email = Column(String, index=True, nullable=False)
+    is_superuser = Column(Boolean, default=False)
+    hashed_password = Column(String, nullable=False)
