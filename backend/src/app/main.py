@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.db import engine
 from app.api import models
 from app.api.mediciones import router as medicionesRouters
+from app.api.auth import router as authRouters
 #from app.api.estaciones import router as estacionesRouters
 
 models.Base.metadata.create_all(bind=engine)
@@ -26,7 +27,7 @@ app.add_middleware(
 app.router.prefix = "/api/v1"
 
 app.include_router(medicionesRouters)
-#app.include_router(estacionesRouters)
+app.include_router(authRouters)
 
 '''
 @app.on_event("startup")
