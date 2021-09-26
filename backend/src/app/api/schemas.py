@@ -4,7 +4,6 @@ from pydantic import BaseModel,EmailStr
 from datetime import datetime
 
 
-
 class MedicionBase(BaseModel):
     id: int
     valor:float
@@ -80,3 +79,13 @@ class UserInDB(UserInDBBase):
 # Additional properties to return via API
 class User(UserInDBBase):
     ...
+
+class MedicionProps(BaseModel):
+    id:int
+    estacion:str
+    parametro:str
+    fecha: datetime
+    valor:float
+    unidad: str
+    qf: str
+
