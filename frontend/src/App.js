@@ -1,20 +1,22 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Routes from "./Routes";
-
+import Auth from "./context/Auth";
 
 function App() {
   return (
-    <Router>
+    <Auth>
       <div class="container-fluid py-3">
+
         <Header/>
-          <Routes/>
+           
+        <Routes/> 
 
         <Footer/>
+      
       </div>
-    </Router>
+    </Auth>
   );
 }
 
