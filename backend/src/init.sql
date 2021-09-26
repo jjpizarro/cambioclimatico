@@ -15,14 +15,41 @@ INSERT INTO parametros (id,nombre,descripcion, min_valor, max_valor, unidad) VAL
 (3,'Humedad', 'Humedad relativa', 30, 100,'%'),
 (4,'Temperatura', 'Temperatura', 19, 45,'°C');
 
-class Medicion(Base):
-    __tablename__ = "mediciones"
-    id = Column(Integer, primary_key= True, index=True)
-    fecha = Column(DateTime, nullable=False)
-    valor = Column(Float)
-    qf = Column(Enum(QualityFlag))
-    estacion_id = Column(Integer,ForeignKey('estaciones.id'))
-    parametro_id = Column(Integer,ForeignKey('parametros.id'))
 
 INSERT INTO mediciones(id,fecha, valor, qf, estacion_id, parametro_id) VALUES
 (1,'2008/12/31 13:00:00.59','Bueno',10,1)
+
+with datos_estaciones(estacion,lat,lon,fecha, variable, unidad, value, qf, nombre_estacion) as (
+select
+l.id AS estacion,
+e.latitud AS lat,
+e.longitud AS lon,
+l.fecha AS fecha,
+pa.nombre AS variable,
+pa.unidad AS unidad,
+l.valor AS value,
+l.qf AS qf,
+e.nombre AS nombre_estacion
+from estaciones e inner join mediciones l on l.estacion_id = e.id join parametros pa on l.parametro_id = pa.id
+) 
+select
+p.estacion,
+p.lat AS latitud,
+p.lon AS longitud,
+p.fecha AS fecha,
+case 
+when (p.variable = 'co2') then max(p.value) 
+else null end AS CO2,
+case 
+when (p.variable = 'ch4') then max(p.value) 
+else null end AS CH4,
+case 
+when (p.variable = 'Humedad') then max(p.value) 
+else null end AS Humedad,
+case 
+when (p.variable = 'Temperatura') then max(p.value) 
+else null end AS Temperatura
+
+from datos_estaciones p
+	where p.qf = 'bueno' or p.qf = 'no_verificado'
+group by p.estacion,p.nombre_estacion,p.lat,p.lon,p.fecha,p.variable
