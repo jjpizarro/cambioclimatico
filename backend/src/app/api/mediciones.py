@@ -38,3 +38,7 @@ def filtrar_busqueda(filtro: schemas.Filtro, db: Session = Depends(get_db)):
     mediciones = services.filtrar_busqueda(filtro= filtro, db=db)
     return mediciones
  
+@router.get('/mediciones/gjson/')
+def get_geojson(db: Session = Depends(get_db)):
+    mediciones = services.get_medicionesGJson(db)
+    return mediciones
