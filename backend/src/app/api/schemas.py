@@ -28,6 +28,24 @@ class MedicionView(BaseModel):
     unidad: str
     qf: str
 
+class DatoEstacionesGeoJsonView(BaseModel):
+    estacion:int
+    nombre_estacion: str
+    variable:str
+    fecha: datetime
+    valor:float
+    unidad: str
+    qf: str
+
+class DatoDescargaGeoJsonView(BaseModel):
+    estacion:int 
+    nombre_estacion: str
+    fecha: datetime
+    co2:Optional[float]
+    ch4:Optional[float]
+    humedad:Optional[float]
+    temperatura:Optional[float]
+    
 class Estacion(BaseModel):
     id:int
     nombre: str
