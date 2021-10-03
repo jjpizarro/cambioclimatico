@@ -17,21 +17,16 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     expose:
       - 5432
-    #image: mysql
-    #command: --default-authentication-plugin=mysql_native_password
-    #restart: always
     ports:
       - "5432:5432"
-    #expose:
-    #  - 3306
     environment:
       - POSTGRES_USER=cclimaticouser
       - POSTGRES_PASSWORD=cc123
       - POSTGRES_DB=cambioclimatico
-      #MYSQL_DATABASE: cambioclimatico
-      #MYSQL_USER: cc123.
-      #MYSQL_PASSWORD: 123123 
-      #MYSQL_ROOT_PASSWORD: 123123 
+     
+   
 #To persist the data beyond the life of the container we configured a volume. This config will bind postgres_data to the "/var/lib/postgresql/data/" directory in the container.
 volumes:
   postgres_data:
+
+#https://stackoverflow.com/questions/34688465/how-do-i-run-a-sql-file-of-inserts-through-docker-run
