@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from .schemas import MedicionView, Medicion, MedicionQf, Filtro
+from .schemas import MedicionView, Medicion, MedicionQf, Filtro, DatoEstacionesGeoJsonView, DatoDescargaGeoJsonView
 from . import models, schemas
 from geojson import Feature,Point, FeatureCollection
 
@@ -14,16 +14,43 @@ def conveter_medicion(medicion):
     )
 
 def conveter_medicionGeoJson(medicion):
-    m = MedicionView(id = medicion.id, estacion = medicion.estacion.nombre,
-        parametro= medicion.parametro.nombre,
+    m = MedicionView(estacion = medicion.nombre_estacion,
+        parametro= medicion.variable,
         fecha=medicion.fecha,
-        valor=medicion.valor,
-        unidad= medicion.parametro.unidad,
+        valor=medicion.value,
+        unidad= medicion.unidad,
         qf = medicion.qf
     )
-    coords =(medicion.estacion.latitud,medicion.estacion.longitud)
+    
+    coords =(medicion.latitud,medicion.longitud)
     p = Point(coords)
     return Feature(geometry=p, properties=m) 
+
+def converter_datosEstacionesGJson(medicion):
+    m = DatoEstacionesGeoJsonView( estacion = medicion.estacion, nombre_estacion=medicion.nombre_estacion,
+            variable= medicion.variable,
+            fecha=medicion.fecha,
+            valor=medicion.value,
+            unidad= medicion.unidad,
+            qf = medicion.qf
+        )
+    coords =(medicion.latitud,medicion.longitud)
+    p = Point(coords)
+    return Feature(geometry=p, properties=m) 
+
+def converter_datosdescargaGJson(medicion):
+    props = DatoDescargaGeoJsonView(
+        estacion=medicion.estacion,
+        nombre_estacion=medicion.nombre_estacion,
+        fecha=medicion.fecha,
+        co2=medicion.co2,
+        ch4=medicion.ch4,
+        humedad=medicion.humedad,
+        temperatura=medicion.temperatura
+    )
+    coords =(medicion.latitud,medicion.longitud)
+    p = Point(coords)
+    return Feature(geometry=p, properties=props) 
 
 def get_mediciones(db:Session, skip: int = 0, limit: int=20):
     ms = db.query(models.Medicion).offset(skip).limit(limit).all()
@@ -34,6 +61,16 @@ def get_mediciones(db:Session, skip: int = 0, limit: int=20):
 def get_medicionesGJson(db:Session,skip: int = 0, limit: int=20):
     ms = db.query(models.Medicion).offset(skip).limit(limit).all()
     mediciones = [conveter_medicionGeoJson(medicion) for medicion in ms]
+    return FeatureCollection(mediciones)
+
+def get_datos_estacionesGJson(db:Session):
+    data = db.query(models.DatoEstacionesView).offset(0).limit(100).all()
+    mediciones  = [converter_datosEstacionesGJson(medicion) for medicion in data]
+    return FeatureCollection(mediciones)
+
+def get_datos_descargaGJson(db:Session):
+    data = db.query(models.DatoDescargas).offset(0).limit(100).all()
+    mediciones  = [converter_datosdescargaGJson(medicion) for medicion in data]
     return FeatureCollection(mediciones)
 
 def get_medicion(db: Session, medicion_id: int):
