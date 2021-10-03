@@ -1,11 +1,24 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect,useMemo} from "react";
 import MedicionServicio from '../services/mediciones.services';
 import ModalForm from '../components/ModalForm';
-
+import Pagination from '../components/Pagination'
+let PageSize = 10;
 const Mediciones = (props) =>{
     const [mediciones, setMediciones] = useState([]);
     const [estaciones, setEstaciones] = useState([]);
     const [parametros,setParametros] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+
+      /*const currentTableData = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+       
+        MedicionServicio.getMediciones().then(response=>{
+          setMediciones(response.data);
+          lista = response.data;
+        });
+        return mediciones.slice(firstPageIndex, lastPageIndex);
+      }, [currentPage]);*/
     const initialFiltros = {
         estacion : '',
         startdate: null,
@@ -24,9 +37,9 @@ const Mediciones = (props) =>{
       };
       
     useEffect(() => {
-        MedicionServicio.getMediciones().then(response=>{
+        /*MedicionServicio.getMediciones().then(response=>{
             setMediciones(response.data);
-        });
+        });*/
         MedicionServicio.getEstaciones().then(response=>{
             setEstaciones(response.data);
         });
@@ -49,7 +62,8 @@ const Mediciones = (props) =>{
     }
     return (
         <>
-        <main>
+         
+        <main className="h-100">
             <div className="pricing-header p-3 pb-md-4 mx-auto text-center">
             <h1 className="display-6 fw-normal">Mediciones</h1>
             <p className="fs-6 text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati ut, quos a enim saepe odit velit unde dignissimos eum ullam amet corrupti placeat aspernatur earum nemo quia consequuntur corporis esse.</p>
@@ -109,7 +123,7 @@ const Mediciones = (props) =>{
                 </thead>
                 <tbody className="">
                 {mediciones.length > 0 ? (
-                    mediciones.map((medicion)=>(
+                    currentTableData.map((medicion)=>(
                         <tr key={medicion.id}>
                         <td>{medicion.estacion}</td>
                         <td>{medicion.fecha}</td>
@@ -134,6 +148,13 @@ const Mediciones = (props) =>{
                   
                 </tbody>
               </table>
+              {/*<Pagination
+                className="pagination-bar"
+                currentPage={currentPage}
+                totalCount={mediciones.length}
+                pageSize={PageSize}
+                onPageChange={page => setCurrentPage(page)}
+              />*/}
             </div>
           </div>
         </main>
