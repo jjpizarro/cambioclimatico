@@ -1,0 +1,53 @@
+
+[{
+    "id":20,
+    "device_name":"Sitio Nuevo VIPIS 2",
+    "device_label":"monitoreo2",
+    "token":"BBFF-6nm7BUY8qQqotnwEjrslMHOIMlJUW9",
+    "params":[
+        {
+         "id":1,
+         "variable_label":"ch4"
+        },
+        {
+         "id":2,
+         "variable_label":"co2"
+        },
+        {
+         "id":3,
+         "variable_label":"humedad"
+        },
+        {
+         "id":4,
+         "variable_label":"temperatura"
+        }
+    ]
+    
+},
+{
+    "id":40,
+    "device_name":"Sabanas de San Angel",
+    "device_label":"monitoreo4",
+    "token":"BBFF-7uyH9eVXScLcZ0inSIGLJq0WkXcQn2",
+    "params":[
+        {
+         "id":1,
+         "variable_label":"ch4"
+        },
+        {
+         "id":2,
+         "variable_label":"co2"
+        },
+        {
+         "id":3,
+         "variable_label":"humedad"
+        },
+        {
+         "id":4,
+         "variable_label":"temperatura"
+        }
+    ]
+    
+}
+]
+
