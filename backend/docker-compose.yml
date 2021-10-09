@@ -12,7 +12,8 @@ services:
       - DATABASE_URL=postgresql://cclimaticouser:cc123@db/cambioclimatico
 
   db:
-    image: postgres:13-alpine
+    #image: postgres:13-alpine
+    build: ./db
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     expose:
