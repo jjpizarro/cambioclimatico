@@ -39,7 +39,7 @@ class Estacion(Base):
     nombre = Column(String, nullable=False)
     latitud = Column(Float)
     longitud = Column(Float)
-    fecha_creacion = Column(DateTime, default=func.now(), nullable=False)
+    fecha_creacion = Column(DateTime, default=func.now())
     estado = Column(Enum(EstadoEstacion))
     mediciones = relationship("Medicion", back_populates="estacion") 
 
