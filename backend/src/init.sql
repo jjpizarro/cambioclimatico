@@ -16,7 +16,7 @@ INSERT INTO parametros (id,nombre,descripcion, min_valor, max_valor, unidad) VAL
 (4,'Temperatura', 'Temperatura', 19, 45,'°C');
 
 
-INSERT INTO mediciones(id,fecha, valor, qf, estacion_id, parametro_id) VALUES
+/*INSERT INTO mediciones(id,fecha, valor, qf, estacion_id, parametro_id) VALUES
 (1,'2008/12/31 13:00:00.59','Bueno',10,1)
 
 with datos_estaciones(estacion,lat,lon,fecha, variable, unidad, value, qf, nombre_estacion) as (
@@ -53,3 +53,5 @@ else null end AS Temperatura
 from datos_estaciones p
 	where p.qf = 'bueno' or p.qf = 'no_verificado'
 group by p.estacion,p.nombre_estacion,p.lat,p.lon,p.fecha,p.variable
+
+*/
