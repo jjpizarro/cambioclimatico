@@ -8,6 +8,9 @@ from app.db import get_db
 
 router = APIRouter()
 
+@router.get("/")
+def check():
+    return 'API Cambio Climático'
 
 @router.get("/mediciones/", response_model=List[schemas.MedicionView])
 def get_mediciones(skip: int = 0, limit: int = 10000, db: Session = Depends(get_db)):
