@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react'
-import PropTypes from 'prop-types'
-import authService from '../services/auth.service'
+//import PropTypes from 'prop-types'
+//import authService from '../services/auth.service'
 import { AuthReducer } from './authReducer'
 export const AuthContext = React.createContext({})
 const initialState = {
