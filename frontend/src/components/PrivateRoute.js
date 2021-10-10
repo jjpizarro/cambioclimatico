@@ -1,7 +1,7 @@
 //https://github.com/ronaksonigara/react-private-public-route/blob/main/src/components/PrivateRoute.js
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import PropTypes from "prop-types";
+/*import PropTypes from "prop-types";
 
 const propTypes = {
 	isAuthenticated: PropTypes.bool,
@@ -15,7 +15,7 @@ const defaultProps = {
 	redirect: "/login",
 	isAuthenticated: false,
 };
-
+*/
 const PrivateRoute = ({
 	isAuthenticated,
 	component: Component,
