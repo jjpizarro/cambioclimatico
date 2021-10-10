@@ -1,10 +1,3 @@
-/*
-initialState = {
-    isAuthenticated:false,
-    user:null
-}
-*/
-
 export const AuthReducer = (state, action)=>{
     switch(action.type){
         case 'LOGIN':
