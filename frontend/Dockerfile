@@ -18,7 +18,7 @@ ENV NODE_ENV production
 WORKDIR /app
 # Cache and Install dependencies
 COPY package.json .
-COPY package-lock.json ./
+#COPY package-lock.json ./
 RUN npm i npm@latest
 # Copy app files 
 COPY . .
