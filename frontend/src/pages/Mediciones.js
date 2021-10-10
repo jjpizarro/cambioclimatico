@@ -123,7 +123,7 @@ const Mediciones = (props) =>{
                 </thead>
                 <tbody className="">
                 {mediciones.length > 0 ? (
-                    currentTableData.map((medicion)=>(
+                    mediciones.map((medicion)=>(
                         <tr key={medicion.id}>
                         <td>{medicion.estacion}</td>
                         <td>{medicion.fecha}</td>
