@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  
+  api:
+    build: ./backend/src
+    restart: always
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    volumes:
+      - ./backend/src/:/usr/src/app/
+    ports:
+      - 8000:8000
+    environment:
+      - DATABASE_URL=postgresql://cclimaticouser:cc123@db/cambioclimatico
+   
+  db:
+    image: postgres:13-alpine
+    #build: ./db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=cclimaticouser
+      - POSTGRES_PASSWORD=cc123
+      - POSTGRES_DB=cambioclimatico
+  
+  frontend:
+    build:
+      context: .
+      target: production
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    #command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    depends_on:
+      - api
+
+#To persist the data beyond the life of the container we configured a volume. This config will bind postgres_data to the "/var/lib/postgresql/data/" directory in the container.
+volumes:
+  postgres_data:
+
+#https://stackoverflow.com/questions/34688465/how-do-i-run-a-sql-file-of-inserts-through-docker-run
