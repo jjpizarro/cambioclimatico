@@ -68,10 +68,10 @@ export default function Login(){
 					<div className="card fat">
 						<div className="card-body">
 							<h4 className="card-title">Ingresar</h4>
-							<form method="POST" onSubmit={handleFormSubmit} className="my-login-validation" novalidate="">
+							<form method="POST" onSubmit={handleFormSubmit} className="my-login-validation" >
 								<div className="form-group">
 									<label for="email">Correo electrónico</label>
-									<input id="email" type="email" className="form-control" name="username" value={formData.username} required autofocus onChange={handleInputChange}/>
+									<input id="email" type="email" className="form-control" name="username" value={formData.username}  onChange={handleInputChange}/>
 									<div className="invalid-feedback">
 										Email is invalid
 									</div>
@@ -80,7 +80,7 @@ export default function Login(){
 								<div className="form-group">
 									<label for="password">Contraseña
 									</label>
-									<input id="password" type="password" className="form-control" name="password" required data-eye value={formData.password} onChange={handleInputChange}/>
+									<input id="password" type="password" className="form-control" name="password" value={formData.password} onChange={handleInputChange}/>
 								    <div className="invalid-feedback">
 								    	Password is required
 							    	</div>
