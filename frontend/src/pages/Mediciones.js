@@ -1,13 +1,13 @@
-import React, {useState, useEffect,useMemo} from "react";
+import React, {useState, useEffect} from "react";
 import MedicionServicio from '../services/mediciones.services';
 import ModalForm from '../components/ModalForm';
-import Pagination from '../components/Pagination'
-let PageSize = 10;
+//import Pagination from '../components/Pagination'
+//let PageSize = 10;
 const Mediciones = (props) =>{
     const [mediciones, setMediciones] = useState([]);
     const [estaciones, setEstaciones] = useState([]);
     const [parametros,setParametros] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
+    //const [currentPage, setCurrentPage] = useState(1);
 
       /*const currentTableData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize;
@@ -95,7 +95,7 @@ const Mediciones = (props) =>{
                     </div>
                     <div className="col-sm-3">
                       <label className="visually-hidden" for="parametro">Parámetro</label>
-                      <select className="form-select" id="parametro" name ="parametro" value="parametro" value={filtros.parametro}  onChange={handleOnChange}>
+                      <select className="form-select" id="parametro" name ="parametro" value={filtros.parametro}  onChange={handleOnChange}>
                         <option selected>Seleccione...</option>
                         {(
                             parametros.map(parametro =>(
