@@ -15,7 +15,6 @@ services:
    
   db:
     image: postgres:13-alpine
-    #build: ./db
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     expose:
@@ -29,14 +28,14 @@ services:
   
   frontend:
     build:
-      context: .
+      context: ./frontend/
       target: production
     restart: always
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - ./frontend/nginx:/etc/nginx/conf.d
     #command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     depends_on:
       - api
