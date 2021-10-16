@@ -27,6 +27,24 @@ services:
       - POSTGRES_PASSWORD=cc123
       - POSTGRES_DB=cambioclimatico
   
+  frontend:
+    build:
+      context: ./frontend/
+      target: production
+    restart: always
+    #ports:
+    #  - "81:80"
+    #  - "444:443"
+    expose:
+      - 80
+    environment:
+      - VIRTUAL_PORT=80
+    #volumes:
+    #  - ./frontend/nginx:/etc/nginx/conf.d
+    #command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    depends_on:
+      - api
+
   nginx-proxy:
     container_name: nginx-proxy
     #build: nginx
@@ -42,18 +60,19 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     depends_on:
       - api
-  nginx-proxy-letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    env_file:
-      - ./.env.prod.proxy-companion
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - certs:/etc/nginx/certs
-      - html:/usr/share/nginx/html
-      - vhost:/etc/nginx/vhost.d
-      - acme:/etc/acme.sh
-    depends_on:
-      - nginx-proxy
+      - frontend
+#  nginx-proxy-letsencrypt:
+#    image: jrcs/letsencrypt-nginx-proxy-companion
+#    env_file:
+#      - ./.env.prod.proxy-companion
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock:ro
+##     - certs:/etc/nginx/certs
+#      - html:/usr/share/nginx/html
+#      - vhost:/etc/nginx/vhost.d
+#      - acme:/etc/acme.sh
+#    depends_on:
+#      - nginx-proxy
 
 #To persist the data beyond the life of the container we configured a volume. This config will bind postgres_data to the "/var/lib/postgresql/data/" directory in the container.
 volumes:
