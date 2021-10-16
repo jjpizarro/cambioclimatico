@@ -29,7 +29,8 @@ services:
   
   nginx-proxy:
     container_name: nginx-proxy
-    build: nginx
+    #build: nginx
+    image: jwilder/nginx-proxy:0.9
     restart: always
     ports:
       - 444:443
