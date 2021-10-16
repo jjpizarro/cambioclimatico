@@ -10,9 +10,11 @@ services:
       - ./backend/src/:/usr/src/app/
     ports:
       - 8000:8000
+    expose:
+      - 8000
     environment:
       - DATABASE_URL=postgresql://cclimaticouser:cc123@db/cambioclimatico
-   
+    
   db:
     image: postgres:13-alpine
     volumes:
