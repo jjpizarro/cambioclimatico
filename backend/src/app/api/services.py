@@ -64,12 +64,12 @@ def get_medicionesGJson(db:Session,skip: int = 0, limit: int=20):
     return FeatureCollection(mediciones)
 
 def get_datos_estacionesGJson(db:Session):
-    data = db.query(models.DatoEstacionesView).offset(0).limit(100).all()
+    data = db.query(models.DatoEstacionesView).all()
     mediciones  = [converter_datosEstacionesGJson(medicion) for medicion in data]
     return FeatureCollection(mediciones)
 
 def get_datos_descargaGJson(db:Session):
-    data = db.query(models.DatoDescargas).offset(0).limit(100).all()
+    data = db.query(models.DatoDescargas).all()
     mediciones  = [converter_datosdescargaGJson(medicion) for medicion in data]
     return FeatureCollection(mediciones)
 
