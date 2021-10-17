@@ -1,10 +1,9 @@
 FROM tiangolo/uvicorn-gunicorn:python3.8-slim
 
-# set work directory
-WORKDIR /usr/src/app
-# copy requirements file
-COPY ./requirements.txt /usr/src/app/requirements.txt
+RUN apt-get update && apt-get install -y netcat
 
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY . /usr/src/app/
+COPY . .
+
