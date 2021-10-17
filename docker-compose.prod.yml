@@ -44,9 +44,9 @@ services:
       - 444:443
       - 81:80
     volumes:
-      - ./certs:/etc/nginx/certs
-      - ./html:/usr/share/nginx/html
-      - ./vhost:/etc/nginx/vhost.d
+      - certs:/etc/nginx/certs
+      - html:/usr/share/nginx/html
+      - vhost:/etc/nginx/vhost.d
       - /var/run/docker.sock:/tmp/docker.sock:ro
       
 #  nginx-proxy-letsencrypt:
