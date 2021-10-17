@@ -132,3 +132,6 @@ dmypy.json
 frontend/node_modules
 Pipfile
 Pipfile.lock
+vhost
+html
+certs
