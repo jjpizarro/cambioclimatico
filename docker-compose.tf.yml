@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  
+  api:
+    build: ./backend/src
+    restart: always
+    command: uvicorn app.main:app --proxy-headers --reload --workers 1 --host 0.0.0.0 --port 8000
+    volumes:
+      - ./backend/src/:/usr/src/app/
+    expose:
+      - "8000"
+    environment:
+      - DATABASE_URL=postgresql://cclimaticouser:cc123@db/cambioclimatico
+      - VIRTUAL_HOST=api.ccmagdalena.online
+      - VIRTUAL_PORT=8000
+  
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    expose:
+      - "5432"
+    
+    environment:
+      - POSTGRES_USER=cclimaticouser
+      - POSTGRES_PASSWORD=cc123
+      - POSTGRES_DB=cambioclimatico
+  
+  frontend:
+    build:
+      context: ./frontend/
+      target: production
+    restart: always
+    expose:
+      - "80"
+    environment:
+      - VIRTUAL_HOST=ccmagdalena.online
+      - VIRTUAL_PORT=80
+  
+  nginx-proxy:  
+    container_name: nginx-proxy
+    #build: nginx
+    image: jwilder/nginx-proxy:latest
+    restart: always
+    ports:
+      - 444:443
+      - 81:80
+    volumes:
+      - ./certs:/etc/nginx/certs
+      - ./html:/usr/share/nginx/html
+      - ./vhost:/etc/nginx/vhost.d
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  
+volumes:
+  postgres_data:
