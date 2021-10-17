@@ -12,7 +12,7 @@ router = APIRouter()
 def check():
     return 'API Cambio Climático'
 
-@router.get("/mediciones/", response_model=List[schemas.MedicionView])
+@router.get("/mediciones", response_model=List[schemas.MedicionView])
 def get_mediciones(skip: int = 0, limit: int = 10000, db: Session = Depends(get_db)):
     monitores = services.get_mediciones(db, skip=skip, limit=limit)
     return monitores
@@ -22,31 +22,31 @@ def get_mediciones(id: int,  db: Session = Depends(get_db)):
     medicion = services.get_medicion(medicion_id=id,db=db)
     return medicion
 
-@router.put('/mediciones/')
+@router.put('/mediciones')
 def update_medicion(medicion:schemas.MedicionQf, db:Session = Depends(get_db)):
     return services.update_qf_medicion(db,medicion)
 
-@router.get("/estaciones/", response_model=List[schemas.Estacion])
+@router.get("/estaciones", response_model=List[schemas.Estacion])
 def get_estaciones(db: Session = Depends(get_db)):
     estaciones = services.get_estaciones(db)
     return estaciones
 
-@router.get('/parametros/',response_model=List[schemas.Parametro])
+@router.get('/parametros',response_model=List[schemas.Parametro])
 def get_parametros(db: Session = Depends(get_db)):
     parametros = services.get_parametros(db)
     return parametros
 
-@router.post('/filtros/',response_model=List[schemas.MedicionView])
+@router.post('/filtros',response_model=List[schemas.MedicionView])
 def filtrar_busqueda(filtro: schemas.Filtro, db: Session = Depends(get_db)):
     mediciones = services.filtrar_busqueda(filtro= filtro, db=db)
     return mediciones
  
-@router.get('/mediciones/datos/gjson/')
+@router.get('/mediciones/datos/gjson')
 def get_geojson(db: Session = Depends(get_db)):
     mediciones = services.get_datos_estacionesGJson(db)
     return mediciones
 
-@router.get('/mediciones/descargas/gjson/')
+@router.get('/mediciones/descargas/gjson')
 def get_geojson(db: Session = Depends(get_db)):
     mediciones = services.get_datos_descargaGJson(db)
     return mediciones

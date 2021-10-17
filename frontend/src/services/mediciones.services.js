@@ -7,7 +7,7 @@ const getMedicion = id => {
     return http.get(`/mediciones/${id}`)
 }
 const updateMedicion = (data) =>{
-    return http.put('/mediciones/',data);
+    return http.put('/mediciones',data);
 }
 const getEstaciones = () =>{
     return http.get('/estaciones');
@@ -17,7 +17,7 @@ const getParametros = () =>{
 }
 const filtrarBusqueda = (data) =>{
     console.log(data);
-    return http.post('/filtros/',data);
+    return http.post('/filtros',data);
 }
 export default {
     getMediciones,
