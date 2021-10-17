@@ -7,8 +7,6 @@ services:
       context: ./backend/src
       dockerfile: Dockerfile.prod
     restart: always
-    volumes:
-      - ./backend/src/:/usr/src/app/
     expose:
       - 80
     env_file:
